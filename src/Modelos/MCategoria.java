@@ -54,12 +54,10 @@ public class MCategoria {
 	public boolean consultarSiguiente() {
 		estado = false;
 		try {
-			 establecerConexion();
 			 estado = cargaCategorias.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		cerrarConexion();
 		return estado;
 
 	}
@@ -67,21 +65,17 @@ public class MCategoria {
 	public boolean consultarAnterior() {
 		estado = false;
 		try {
-			 establecerConexion();
 			 estado = cargaCategorias.previous();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		cerrarConexion();
 		return estado;
 
 	}
 	
 	public void cursorPrincipio() {
 		try {
-			establecerConexion();
 			cargaCategorias.first();
-			cerrarConexion();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,9 +84,7 @@ public class MCategoria {
 
 	public void cursorFinal() {
 		try {
-			establecerConexion();
 			cargaCategorias.last();
-			cerrarConexion();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

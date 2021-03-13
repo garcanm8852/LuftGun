@@ -8,9 +8,10 @@ import java.sql.SQLException;
 
 public class MProducto {
 	Connection Conexion;
-	ResultSet cargaProducto;
+	ResultSet cargaProductos;
+	ResultSet srcProducto;
 	
-	int idreferencia;
+	String idreferencia;
 	String nombre;
 	String marca;
 	String descripcion;
@@ -18,6 +19,11 @@ public class MProducto {
 	byte[] img;
 	int stock;
 	int subcategoria;
+	byte[] src;
+	String nombreCategoria;
+	int categoria;
+	String nombreSubcategoria;
+	
 	
 	PreparedStatement ps;
 	String Sentencia;
@@ -43,27 +49,82 @@ public class MProducto {
 	}
 	
 
-	public void cargarCategorias() {
+	public void cargarProductos() {
 		try {
 			establecerConexion();
 			ps = Conexion.prepareStatement("SELECT * FROM luftgun.producto");
-			cargaProducto = ps.executeQuery();
-			cargaProducto.next();
+			cargaProductos = ps.executeQuery();
+			cargaProductos.next();
 			cerrarConexion();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void cargarProductosPorCategorias(int pidCategoria) {
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT * FROM luftgun.DatosProductosCompletoBusqueda(?);");
+			ps.setInt(1, pidCategoria);
+			cargaProductos = ps.executeQuery();
+			cargaProductos.next();
+			cerrarConexion();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void cargarProductosPorSubcategorias(int idSubcategoria) {
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT * FROM luftgun.DatosProductoSubcategoria(?);");
+			ps.setInt(1, idSubcategoria);
+			cargaProductos = ps.executeQuery();
+			cargaProductos.next();
+			cerrarConexion();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public byte[] cargarImagenProducto(String pidreferencia) {
+		src = null;
+		srcProducto = null;
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT img FROM luftgun.producto WHERE idreferencia = ?");
+			ps.setString(1, pidreferencia);
+			srcProducto = ps.executeQuery();
+			cerrarConexion();
+			srcProducto.next();
+			src = srcProducto.getBytes(1);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return src;
+	}
+	
+	public void consultarProducto(String pidreferencia) {
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT * FROM luftgun.DatosProductoBusqueda(?)");
+			ps.setString(1, pidreferencia);
+			cargaProductos = ps.executeQuery();
+			cerrarConexion();
+			cargaProductos.next();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 
 	public boolean consultarSiguiente() {
 		estado = false;
 		try {
-			 establecerConexion();
-			 estado = cargaProducto.next();
+			 estado = cargaProductos.next();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		cerrarConexion();
 		return estado;
 
 	}
@@ -71,21 +132,17 @@ public class MProducto {
 	public boolean consultarAnterior() {
 		estado = false;
 		try {
-			 establecerConexion();
-			 estado = cargaProducto.previous();
+			 estado = cargaProductos.previous();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		cerrarConexion();
 		return estado;
 
 	}
 	
 	public void cursorPrincipio() {
 		try {
-			establecerConexion();
-			cargaProducto.first();
-			cerrarConexion();
+			cargaProductos.first();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,19 +151,17 @@ public class MProducto {
 
 	public void cursorFinal() {
 		try {
-			establecerConexion();
-			cargaProducto.last();
-			cerrarConexion();
+			cargaProductos.last();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public int getIdreferencia(){
-		idreferencia = 0;
+	public String getIdreferencia(){
+		idreferencia = "";
 		try {
-			idreferencia = cargaProducto.getInt(1);
+			idreferencia = cargaProductos.getString(1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,7 +172,7 @@ public class MProducto {
 	public String getNombre(){
 		nombre = null;
 		try {
-			nombre = cargaProducto.getString(2);
+			nombre = cargaProductos.getString(2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,7 +183,7 @@ public class MProducto {
 	public String getMarca() {
 		marca= null;
 		try {
-			marca = cargaProducto.getString(3);
+			marca = cargaProductos.getString(3);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -138,7 +193,7 @@ public class MProducto {
 	public String getDescripcion() {
 		descripcion= null;
 		try {
-			descripcion = cargaProducto.getString(4);
+			descripcion = cargaProductos.getString(4);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -148,7 +203,7 @@ public class MProducto {
 	public Double getPrecio() {
 		precio = null;
 		try {
-			precio = cargaProducto.getDouble(5);
+			precio = cargaProductos.getDouble(5);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -158,7 +213,7 @@ public class MProducto {
 	public byte[] getImg() {
 		img = null;
 		try {
-			img = cargaProducto.getBytes(6);
+			img = cargaProductos.getBytes(6);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -169,7 +224,7 @@ public class MProducto {
 	public int getStock() {
 		stock = 0;
 		try {
-			stock = cargaProducto.getInt(7);
+			stock = cargaProductos.getInt(7);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -179,11 +234,48 @@ public class MProducto {
 	public int getSubcategoria() {
 		subcategoria = 0;
 		try {
-			subcategoria = cargaProducto.getInt(8);
+			subcategoria = cargaProductos.getInt(8);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return subcategoria;
 	}
+	
+	public String getNombreSubcategoria(){
+		nombreSubcategoria = "";
+		try {
+			nombreSubcategoria = cargaProductos.getString(9);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return nombreSubcategoria;
+	}
+	
+	public int getCategoria() {
+		categoria = 0;
+		try {
+			categoria = cargaProductos.getInt(10);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return categoria;
+	}
+	
+	public String getNombreCategoria() {
+		nombreCategoria = "";
+		try {
+			nombreCategoria = cargaProductos.getString(11);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return nombreCategoria;
+	}
+
+
+
+
+	
 	
 }

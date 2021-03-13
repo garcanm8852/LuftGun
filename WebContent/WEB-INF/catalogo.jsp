@@ -1,7 +1,12 @@
-<%@ page language='java' contentType='text/html; charset=ISO-8859-1'
-	pageEncoding='ISO-8859-1'%>
-<%@page import="java.util.ArrayList"%>
+<%@ page language='java' contentType='text/html; charset=UTF-8'
+	pageEncoding='UTF-8'%>
+<%@page import="Catalogo.Cproducto"%>
+
 <!DOCTYPE html>
+<%
+Cproducto[] listaProductos;
+%>
+
 
 <html lang='en'>
 
@@ -20,7 +25,7 @@
 	src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'
 	integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns'
 	crossorigin='anonymous'></script>
-<title>Cat·logo</title>
+<title>Cat√°logo</title>
 </head>
 
 <body>
@@ -37,21 +42,20 @@
 				<ul class='navbar-nav mr-auto '>
 					<li class='nav-item '><a class='nav-link ' href='Index '>Inicio</a>
 					</li>
-					<li class='nav-item active'><a class='nav-link '
+					<li class='nav-item'><a class='nav-link '
 						href='Catalogo ' tabindex='-1 ' aria-disabled='true '>Catalogo</a>
 					</li>
 					<%
 						String[] categorias = (String[]) session.getAttribute("Categorias");
-						for (int i = 0; i < categorias.length; i++) {
-							out.print(
-									"<li class='nav-item '><a class='nav-link ' href='catalogo?idcategoria="+(i+1) + "' tabindex='-1 ' aria-disabled='true '>"
-											+ categorias[i] + "</a></li>");
-						}
+									for (int i = 0; i < categorias.length; i++) {
+										out.print("<li class='nav-item '><a class='nav-link ' href='Catalogo?idcategoria=" + (i + 1)
+												+ "' tabindex='-1 ' aria-disabled='true '>" + categorias[i] + "</a></li>");
+									}
 					%>
 
 					<li class='nav-item '><a class='nav-link '
 						href='InicioSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar
-							SesiÛn</a></li>
+							Sesi√≥n</a></li>
 					<li class='nav-item '><a class='nav-link ' href='Registro '
 						tabindex='-1 ' aria-disabled='true '>Registrarse</a></li>
 				</ul>
@@ -63,18 +67,39 @@
 	<section class='container mt-5'>
 		<article class='row mt-5'>
 			<div class='col-md-12 mt-5'>
-				<h1>ArtÌculos de LuftGun</h1>
+				<h1>Art√≠culos de LuftGun</h1>
 				<h2></h2>
 			</div>
 		</article>
 
 		<article class='row justify-content-between'>
 			<div class='col-md-12'>
-				<div class='row'>
-					<div class='col-md-3'></div>
-					<div class='col-md-3'></div>
-					<div class='col-md-3'></div>
-					<div class='col-md-3'></div>
+				<div class="row">
+
+					<%
+						try {
+										 listaProductos = (Cproducto[]) session.getAttribute("Productos");
+										for (int j = 0; j < listaProductos.length; j++) {
+											
+											out.print("<div class='col-md-3 mt-5'>");
+											out.print("<div class='card w-100'>");
+											out.print("<div class='card-body'>");
+											out.print("<img class='card-img-top' src = '/LuftGun/DecodificarImagen?idreferencia=" + listaProductos[j].getIdreferencia() + "'>");
+											out.print("<h5 class='card-title'>" + listaProductos[j].getNombre() + "</h5>");
+											out.print("<h6 class='card-subtitle mb-2 text-muted'>" + listaProductos[j].getMarca() + "</h6>");
+											out.print("<p class='card-text text-center bold'>" + listaProductos[j].getPrecio() + "‚Ç¨</p>");
+											out.print("<a href='Producto?idreferencia=" + listaProductos[j].getIdreferencia()
+													+ "' class='btn btn-primary w-100'>Comprar</a>");
+											out.print("</div>");
+											out.print("</div>");
+											out.print("</div>");
+
+										}
+									} catch (Exception e) {
+										// Throw e;
+
+									}
+					%>
 				</div>
 			</div>
 		</article>
