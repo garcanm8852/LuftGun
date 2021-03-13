@@ -22,7 +22,7 @@ public class Registro extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("registro.jsp");	
+		request.getRequestDispatcher("WEB-INF/registro.jsp").forward(request, response);
 		}
 
 	/**

@@ -35,10 +35,9 @@ public class DecodificarImagen extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		try {
-			idreferencia = "";
 			buf = null;
-			idreferencia = request.getParameter("idreferencia"); 
-			buf = mProducto.cargarImagenProducto(idreferencia);
+ 
+			buf = mProducto.cargarImagenProducto(request.getParameter("idreferencia") );
 			// Response.setContentType (content_type);
 			// Tells the browser to output pictures
 			response.setContentType("image /" + phototype);

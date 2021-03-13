@@ -65,23 +65,23 @@
                 <form method="post ">
                     <div class="form-group ">
                         <label for="fNombre ">Nombre</label>
-                        <input id="fNombre " class="form-control " type="text " name="fNombre ">
+                        <input id="fNombre " class="form-control " type="text" name="fNombre ">
                     </div>
                     <div class="form-group ">
                         <label for="fApellido ">Apellido</label>
-                        <input id="fApellido " class="form-control " type="text " name="fApellido ">
+                        <input id="fApellido " class="form-control " type="text" name="fApellido ">
                     </div>
                     <div class="form-group ">
                         <label for="fEmail ">Correo Eletrónico</label>
-                        <input id="fEmail " class="form-control " type="email " name="fEmail ">
+                        <input id="fEmail " class="form-control " type="email" name="fEmail ">
                     </div>
                     <div class="form-group ">
                         <label for="fContrasena ">Contraseña</label>
-                        <input id="fContrasena " class="form-control " type="password " name="fContrasena ">
+                        <input id="fContrasena " class="form-control " type="password" name="fContrasena ">
                     </div>
                     <div class="form-group ">
                         <label for="fContasenaRep ">Repita la contraseña</label>
-                        <input id="fContasenaRep " class="form-control " type="password " name="fContasenaRep ">
+                        <input id="fContasenaRep " class="form-control " type="password" name="fContasenaRep ">
                     </div>
                     <button type="submit " class="btn w-100 btn-primary ">Registrarse</button>
                 </form>

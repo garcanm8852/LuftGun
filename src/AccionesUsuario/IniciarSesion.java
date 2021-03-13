@@ -22,9 +22,9 @@ public class IniciarSesion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("iniciosesion.jsp");	}
-
+		request.getRequestDispatcher("WEB-INF/iniciarsesion.jsp").forward(request, response);
+	}
+		
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
