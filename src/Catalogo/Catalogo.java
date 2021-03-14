@@ -135,14 +135,15 @@ public class Catalogo extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		sesion = request.getSession(true);
-		if (sesion.getAttribute("Validacion") == null) {
-			sesion.setAttribute("Validacion", (int) (Math.random() * 999999 + 1));
-		}
-		sesion.setAttribute("Categorias", almacenarCategorias());
 
+		sesion.setAttribute("Categorias", almacenarCategorias());
+		if (sesion.getAttribute("Iniciado") == null) {
+			sesion.setAttribute("Iniciado", false);
+		}
 		/*
 		 * Carga de catálogo por categaría
 		 */
+
 		if (request.getParameter("idcategoria") != null) {
 			/**
 			 * Carga de catálogo con búsqueda por categorias
@@ -164,6 +165,11 @@ public class Catalogo extends HttpServlet {
 
 		request.getRequestDispatcher("WEB-INF/catalogo.jsp").forward(request, response);
 
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

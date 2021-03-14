@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <%
-Cproducto[] listaProductos;
+	Cproducto[] listaProductos;
 %>
 
 
@@ -42,22 +42,38 @@ Cproducto[] listaProductos;
 				<ul class='navbar-nav mr-auto '>
 					<li class='nav-item '><a class='nav-link ' href='Index '>Inicio</a>
 					</li>
-					<li class='nav-item'><a class='nav-link '
-						href='Catalogo ' tabindex='-1 ' aria-disabled='true '>Catalogo</a>
-					</li>
+					<li class='nav-item'><a class='nav-link ' href='Catalogo '
+						tabindex='-1 ' aria-disabled='true '>Catalogo</a></li>
 					<%
 						String[] categorias = (String[]) session.getAttribute("Categorias");
-									for (int i = 0; i < categorias.length; i++) {
-										out.print("<li class='nav-item '><a class='nav-link ' href='Catalogo?idcategoria=" + (i + 1)
-												+ "' tabindex='-1 ' aria-disabled='true '>" + categorias[i] + "</a></li>");
-									}
+						for (int i = 0; i < categorias.length; i++) {
+							out.print("<li class='nav-item '><a class='nav-link ' href='Catalogo?idcategoria=" + (i + 1)
+									+ "' tabindex='-1 ' aria-disabled='true '>" + categorias[i] + "</a></li>");
+						}
 					%>
 
-					<li class='nav-item '><a class='nav-link '
-						href='InicioSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar
-							Sesión</a></li>
-					<li class='nav-item '><a class='nav-link ' href='Registro '
-						tabindex='-1 ' aria-disabled='true '>Registrarse</a></li>
+					<%
+						if ((boolean) session.getAttribute("Iniciado")) {
+
+							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido"
+									+ (String) session.getAttribute("NombreUsuario"));
+							out.print(
+									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
+							out.print("</li>");
+
+						} else {
+
+							out.print("<li class='nav-item active'>");
+							out.print(
+									"<a class='nav-link ' href='IniciarSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar	Sesión</a>");
+							out.print("</li>");
+
+							out.print("<li class='nav-item  '>");
+							out.print("<a class='nav-link ' href='Registro ' tabindex='-1 ' aria-disabled='true '>Registrarse</a>");
+							out.print("</li>");
+
+						}
+					%>
 				</ul>
 			</div>
 		</nav>
@@ -78,27 +94,28 @@ Cproducto[] listaProductos;
 
 					<%
 						try {
-										 listaProductos = (Cproducto[]) session.getAttribute("Productos");
-										for (int j = 0; j < listaProductos.length; j++) {
-											
-											out.print("<div class='col-md-3 mt-5'>");
-											out.print("<div class='card w-100'>");
-											out.print("<div class='card-body'>");
-											out.print("<img class='card-img-top' src = '/LuftGun/DecodificarImagen?idreferencia=" + listaProductos[j].getIdreferencia() + "'>");
-											out.print("<h5 class='card-title'>" + listaProductos[j].getNombre() + "</h5>");
-											out.print("<h6 class='card-subtitle mb-2 text-muted'>" + listaProductos[j].getMarca() + "</h6>");
-											out.print("<p class='card-text text-center bold'>" + listaProductos[j].getPrecio() + "€</p>");
-											out.print("<a href='Producto?idreferencia=" + listaProductos[j].getIdreferencia()
-													+ "' class='btn btn-primary w-100'>Comprar</a>");
-											out.print("</div>");
-											out.print("</div>");
-											out.print("</div>");
+							listaProductos = (Cproducto[]) session.getAttribute("Productos");
+							for (int j = 0; j < listaProductos.length; j++) {
 
-										}
-									} catch (Exception e) {
-										// Throw e;
+								out.print("<div class='col-md-3 mt-5'>");
+								out.print("<div class='card w-100'>");
+								out.print("<div class='card-body'>");
+								out.print("<img class='card-img-top' src = '/LuftGun/DecodificarImagen?idreferencia="
+										+ listaProductos[j].getIdreferencia() + "'>");
+								out.print("<h5 class='card-title'>" + listaProductos[j].getNombre() + "</h5>");
+								out.print("<h6 class='card-subtitle mb-2 text-muted'>" + listaProductos[j].getMarca() + "</h6>");
+								out.print("<p class='card-text text-center bold'>" + listaProductos[j].getPrecio() + "€</p>");
+								out.print("<a href='Producto?idreferencia=" + listaProductos[j].getIdreferencia()
+										+ "' class='btn btn-primary w-100'>Comprar</a>");
+								out.print("</div>");
+								out.print("</div>");
+								out.print("</div>");
 
-									}
+							}
+						} catch (Exception e) {
+							// Throw e;
+
+						}
 					%>
 				</div>
 			</div>

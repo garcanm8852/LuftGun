@@ -36,26 +36,35 @@
 					</li>
 					<li class="nav-item "><a class="nav-link " href="Catalogo "
 						tabindex="-1 " aria-disabled="true ">Catalogo</a></li>
-					<li class="nav-item active"><a class="nav-link "
-						href="InicioSesion " tabindex="-1 " aria-disabled="true ">Iniciar
-							Sesión</a></li>
-					<li class="nav-item  "><a class="nav-link "
-						href="Registro " tabindex="-1 " aria-disabled="true ">Registrarse</a>
-					</li>
+					<%
+						String[] categorias = (String[]) session.getAttribute("Categorias");
+						for (int i = 0; i < categorias.length; i++) {
+							out.print("<li class='nav-item '><a class='nav-link ' href='Catalogo?idcategoria=" + (i + 1)
+									+ "' tabindex='-1 ' aria-disabled='true '>" + categorias[i] + "</a></li>");
+						}
+					%>
 
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#"
-						id="navbarDropdownMenuLink" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> Categoría </a>
-						<div class="dropdown-menu"
-							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a>
-						</div></li>
+					<%
+						if ((boolean) session.getAttribute("Iniciado")) {
+
+							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido" + (String) session.getAttribute("NombreUsuario"));
+							out.print(
+									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
+							out.print("</li>");
+
+						}else{
+							
+							out.print("<li class='nav-item active'>");
+							out.print("<a class='nav-link ' href='IniciarSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar	Sesión</a>");
+							out.print("</li>");
+
+							out.print("<li class='nav-item  '>");
+							out.print("<a class='nav-link ' href='Registro ' tabindex='-1 ' aria-disabled='true '>Registrarse</a>");
+							out.print("</li>");
+
+						}
+					%>
+
 				</ul>
 			</div>
 		</nav>
@@ -71,15 +80,21 @@
 			<div class="col-md-12 ">
 				<form method="post">
 					<div class="form-group ">
-						<label for="fEmail ">Correo Eletrónico</label> <input id="fEmail "
-							class="form-control " type="email " name="fEmail ">
+						<label for="fEmail">Correo Eletrónico</label> <input id="fEmail"
+							class="form-control " type="email" name="fEmail">
 					</div>
-					<div class="form-group ">
-						<label for="fContrasena ">Contraseña</label> <input
-							id="fContrasena " class="form-control " type="password "
-							name="fContrasena ">
+					<div class="form-group">
+						<label for="fContrasena">Contraseña</label> <input
+							id="fContrasena" class="form-control " type="password"
+							name="fContrasena">
+					<%
+							if((boolean)session.getAttribute("Error")){
+								out.print("<p>El correo o la contraseña introducida son incorrecta. Pruebe de nuevo.</p>");
+							}
+							%>
 					</div>
-					<button type="submit " class="btn w-100 btn-primary ">Registrarse</button>
+					<button type="submit " class="btn w-100 btn-primary ">Iniciar
+						Sesion</button>
 				</form>
 			</div>
 		</article>

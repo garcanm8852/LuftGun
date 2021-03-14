@@ -30,25 +30,11 @@
 					<li class="nav-item "><a class="nav-link " href="Catalogo "
 						tabindex="-1 " aria-disabled="true ">Catalogo</a></li>
 					<li class="nav-item "><a class="nav-link "
-						href="InicioSesion " tabindex="-1 " aria-disabled="true ">Iniciar
+						href="IniciarSesion " tabindex="-1 " aria-disabled="true ">Iniciar
 							Sesión</a></li>
 					<li class="nav-item active "><a class="nav-link "
 						href="Registro " tabindex="-1 " aria-disabled="true ">Registrarse</a>
 					</li>
-
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="#"
-						id="navbarDropdownMenuLink" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> Categoría </a>
-						<div class="dropdown-menu"
-							aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a> <a
-								class="dropdown-item" href="#">Subcategorias ######</a>
-						</div></li>
 				</ul>
 			</div>
 		</nav>
@@ -65,23 +51,23 @@
                 <form method="post ">
                     <div class="form-group ">
                         <label for="fNombre ">Nombre</label>
-                        <input id="fNombre " class="form-control " type="text" name="fNombre ">
+                        <input id="fNombre " class="form-control " type="text" name="fNombre">
                     </div>
                     <div class="form-group ">
                         <label for="fApellido ">Apellido</label>
-                        <input id="fApellido " class="form-control " type="text" name="fApellido ">
+                        <input id="fApellido " class="form-control " type="text" name="fApellido">
                     </div>
                     <div class="form-group ">
                         <label for="fEmail ">Correo Eletrónico</label>
-                        <input id="fEmail " class="form-control " type="email" name="fEmail ">
+                        <input id="fEmail " class="form-control " type="email" name="fEmail">
                     </div>
                     <div class="form-group ">
                         <label for="fContrasena ">Contraseña</label>
-                        <input id="fContrasena " class="form-control " type="password" name="fContrasena ">
+                        <input id="fContrasena " class="form-control " type="password" name="fContrasena">
                     </div>
                     <div class="form-group ">
-                        <label for="fContasenaRep ">Repita la contraseña</label>
-                        <input id="fContasenaRep " class="form-control " type="password" name="fContasenaRep ">
+                        <label for="fContasenaRep">Repita la contraseña</label>
+                        <input id="fContasenaRep " class="form-control " type="password" name="fContasenaRep">
                     </div>
                     <button type="submit " class="btn w-100 btn-primary ">Registrarse</button>
                 </form>

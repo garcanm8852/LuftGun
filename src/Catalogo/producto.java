@@ -60,26 +60,19 @@ public class Producto extends HttpServlet {
 		return categorias;
 	}
 
-	protected Cproducto almacenarProducto(String pidreferencia ) {
-			
+	protected Cproducto almacenarProducto(String pidreferencia) {
+
 		try {
 			mProducto.consultarProducto(pidreferencia);
-			productoSolicitado = new Cproducto(mProducto.getIdreferencia(),
-					mProducto.getNombre(),
-					mProducto.getMarca(),
-					mProducto.getDescripcion(),
-					mProducto.getPrecio(),
-					mProducto.getStock(),
-					mProducto.getCategoria(),
-					mProducto.getSubcategoria(),
-					mProducto.getNombreCategoria(),
-					mProducto.getNombreSubcategoria());
+			productoSolicitado = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(), mProducto.getMarca(),
+					mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getStock(), mProducto.getCategoria(),
+					mProducto.getSubcategoria(), mProducto.getNombreCategoria(), mProducto.getNombreSubcategoria());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return productoSolicitado;
 	}
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -89,13 +82,13 @@ public class Producto extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		sesion = request.getSession(true);
-		if (sesion.getAttribute("Validacion") == null) {
-			sesion.setAttribute("Validacion", (int) (Math.random() * 999999 + 1));
+		if (sesion.getAttribute("Iniciado") == null) {
+			sesion.setAttribute("Iniciado", false);
 		}
+
 		sesion.setAttribute("Categorias", almacenarCategorias());
 		sesion.setAttribute("Producto", almacenarProducto(request.getParameter("idreferencia")));
 		request.getRequestDispatcher("WEB-INF/producto.jsp").forward(request, response);
 	}
-
 
 }

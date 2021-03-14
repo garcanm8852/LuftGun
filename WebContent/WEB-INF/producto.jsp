@@ -55,11 +55,28 @@
 						}
 					%>
 
-					<li class='nav-item '><a class='nav-link '
-						href='InicioSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar
-							Sesión</a></li>
-					<li class='nav-item '><a class='nav-link ' href='Registro '
-						tabindex='-1 ' aria-disabled='true '>Registrarse</a></li>
+					<%
+						if ((boolean) session.getAttribute("Iniciado")) {
+
+							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido"
+									+ (String) session.getAttribute("NombreUsuario"));
+							out.print(
+									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
+							out.print("</li>");
+
+						} else {
+
+							out.print("<li class='nav-item active'>");
+							out.print(
+									"<a class='nav-link ' href='IniciarSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar	Sesión</a>");
+							out.print("</li>");
+
+							out.print("<li class='nav-item  '>");
+							out.print("<a class='nav-link ' href='Registro ' tabindex='-1 ' aria-disabled='true '>Registrarse</a>");
+							out.print("</li>");
+
+						}
+					%>
 				</ul>
 			</div>
 		</nav>
@@ -143,9 +160,7 @@
 								<td class="text-justify ">
 									<%
 										out.print(producto.getDescripcion());
-									%> ROYAL CANIN SIZE HEALTH NUTRITION - una nutrición adecuada a
-									las necesidades nutricionales, a la edad, a la actividad, al
-									tamaño y al estado fisiológico de tu perro.
+									%>
 								</td>
 							</tr>
 						</tbody>
