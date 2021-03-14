@@ -51,45 +51,38 @@
 	<section class="container mt-5 ">
 		<article class="row mt-5 ">
 			<div class="col-md-12 mt-5 ">
-				<h1>Crear una cuenta en LuftGun</h1>
+				<h1>Verifique su cuenta de LuftGun</h1>
+				<h2>Por favor, introduzca el código de verificación de Luftgun para activar su cuenta.</h2>
 			</div>
 		</article>
 		<article class="row mt-5 ">
 			<div class="col-md-12 ">
-				<form method="POST">
+				<form method="POST" action="VerificarCuenta">
 					<div class="form-group ">
 						<label for="fNombre ">Nombre</label> <input id="fNombre "
-							class="form-control " type="text" name="fNombre">
+							class="form-control " type="text" name="fNombre" value="<% out.print(session.getAttribute("vNombre")); %>" readonly >
 					</div>
 					<div class="form-group ">
 						<label for="fApellido ">Apellido</label> <input id="fApellido "
-							class="form-control " type="text" name="fApellido">
+							class="form-control " type="text" name="fApellido" value="<% out.print(session.getAttribute("vApellido")); %>" readonly >
 					</div>
 					<div class="form-group ">
 						<label for="fEmail ">Correo Eletrónico</label> <input id="fEmail "
-							class="form-control " type="email" name="fEmail">
-						<%
-							if ((boolean) session.getAttribute("Correo")) {
-								out.print("<p>El correo ya está en uso. Pruebe otro o inicie sesión con su cuenta.</p>");
-							}
-						%>
+							class="form-control " type="email" name="fEmail" value="<% out.print(session.getAttribute("vEmail")); %>"  readonly>
 					</div>
 					<div class="form-group ">
 						<label for="fContrasena ">Contraseña</label> <input
 							id="fContrasena " class="form-control " type="password"
-							name="fContrasena">
+							name="fContrasena" value="<% out.print(session.getAttribute("vContrasena")); %>" readonly>
 					</div>
-					<div class="form-group ">
-						<label for="fContasenaRep">Repita la contraseña</label> <input
-							id="fContasenaRep " class="form-control " type="password"
-							name="fContasenaRep">
-									<%
-							if ((boolean) session.getAttribute("Contrasena")) {
-								out.print("<p>Las contraseñas no coinciden, por favor intente de nuevo.</p>");
-							}
-						%>
+					<div class="form-group">
+						<label for="fValidacion ">Validacion</label> <input
+							id="fValidacion " class="form-control " type="text"
+							name="fValidacion">
 					</div>
-					<button type="submit " class="btn w-100 btn-primary ">Registrarse</button>
+					
+					<% out.print(session.getAttribute("Validacion")); %>
+					<button type="submit" class="btn w-100 btn-primary ">Verificar</button>
 				</form>
 			</div>
 		</article>

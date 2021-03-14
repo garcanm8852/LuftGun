@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/libs/javax.servlet-api-4.0.0.jar"/>
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/libs/postgresql-42.2.19.jar"/>
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/LuftGun/libs/commons-io-2.8.0.jar"/>
+	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/LuftGun/libs/javax.mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

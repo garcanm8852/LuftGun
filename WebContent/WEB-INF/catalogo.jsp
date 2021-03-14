@@ -55,7 +55,7 @@
 					<%
 						if ((boolean) session.getAttribute("Iniciado")) {
 
-							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido"
+							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido "
 									+ (String) session.getAttribute("NombreUsuario"));
 							out.print(
 									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");

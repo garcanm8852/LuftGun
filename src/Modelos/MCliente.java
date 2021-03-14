@@ -10,6 +10,7 @@ public class MCliente {
 	Connection Conexion;
 	PreparedStatement ps;
 	ResultSet cargaCliente;
+	ResultSet cargaID;
 	int idCliente;
 	String Nombre;
 	String Apellido;
@@ -21,6 +22,7 @@ public class MCliente {
 	String Localidad;
 	int Cp;
 	String Pais;
+	int ultimoID;
 	boolean estado = false;
 	final String URL = "jdbc:postgresql://ns3034756.ip-91-121-81.eu/a20-mgarde";
 	final String USER = "a20-mgarde";
@@ -70,6 +72,42 @@ public class MCliente {
 		}
 
 		return false;
+	}
+
+	public int nextID() {
+		ultimoID = 0;
+		cargaID = null;
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT MAX(idcliente) FROM luftgun.cliente");
+			cargaID = ps.executeQuery();
+			cargaID.next();
+			cerrarConexion();
+
+			ultimoID = cargaID.getInt(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ultimoID;
+	}
+
+	public void insertarCliente(int pIdcliente, String pnombre, String pApellido, String pEmail, String pContrasena) {
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement(
+					"INSERT INTO luftgun.cliente(idcliente, nombre, apellido, email, contrasena) VALUES (?, ?, ?, ?, ?); ");
+			ps.setInt(1, pIdcliente);
+			ps.setString(2, pnombre);
+			ps.setString(3, pApellido);
+			ps.setString(4, pEmail);
+			ps.setString(5, pContrasena);
+			ps.execute();
+			cerrarConexion();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getIdcliente() {

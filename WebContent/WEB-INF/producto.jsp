@@ -58,7 +58,7 @@
 					<%
 						if ((boolean) session.getAttribute("Iniciado")) {
 
-							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido"
+							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido "
 									+ (String) session.getAttribute("NombreUsuario"));
 							out.print(
 									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
@@ -166,8 +166,11 @@
 						</tbody>
 					</table>
 					<!-- Añadir al carrito -->
-					<a href="./cesta.html" class="sep-t-25 btn btn-primary w-100">Añadir
-						al Carrito</a>
+					
+					<%
+					out.print("			<a href='Carrito?idproducto="+ producto.getIdreferencia() +  " ' class='sep-t-25 btn btn-primary w-100'>Añadir Carrito</a>");
+					%>
+		
 
 
 				</div>

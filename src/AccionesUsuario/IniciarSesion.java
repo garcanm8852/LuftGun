@@ -106,6 +106,7 @@ public class IniciarSesion extends HttpServlet {
 		if (inciarSesion(request.getParameter("fEmail"),request.getParameter("fContrasena"))) {
 			sesion.setAttribute("Iniciado", true);
 			sesion.setAttribute("NombreUsuario", mCliente.getNombre());
+			sesion.setAttribute("idcliente", mCliente.getIdcliente());
 			sesion.setAttribute("Categorias", almacenarCategorias());
 			request.getRequestDispatcher("Catalogo").forward(request, response);
 		}else {

@@ -51,6 +51,10 @@ public class Registro extends HttpServlet {
 		if (sesion.getAttribute("Contrasena") == null) {
 			sesion.setAttribute("Contrasena", false);
 		}
+		
+		if (sesion.getAttribute("Correo") == null) {
+			sesion.setAttribute("Correo", false);
+		}
 
 		request.getRequestDispatcher("WEB-INF/registro.jsp").forward(request, response);
 	}
@@ -63,6 +67,7 @@ public class Registro extends HttpServlet {
 			throws ServletException, IOException {
 		sesion.setAttribute("Validacion", (int) (Math.random() * 999999 + 1));
 		estadoRegistro = true;
+		
 		if (!request.getParameter("fContrasena").equals(request.getParameter("fContasenaRep"))) {
 			sesion.setAttribute("Contrasena", true);
 			estadoRegistro = false;
@@ -73,7 +78,11 @@ public class Registro extends HttpServlet {
 		}
 
 		if (estadoRegistro == true) {
-
+			sesion.setAttribute("vNombre", request.getParameter("fNombre"));
+			sesion.setAttribute("vApellido", request.getParameter("fApellido"));
+			sesion.setAttribute("vEmail", request.getParameter("fEmail"));
+			sesion.setAttribute("vContrasena", request.getParameter("fContrasena"));
+			response.sendRedirect("VerificarCuenta");
 		} else {
 			request.getRequestDispatcher("WEB-INF/registro.jsp").forward(request, response);
 
