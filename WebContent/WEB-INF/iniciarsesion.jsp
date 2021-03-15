@@ -36,13 +36,6 @@
 					</li>
 					<li class="nav-item "><a class="nav-link " href="Catalogo "
 						tabindex="-1 " aria-disabled="true ">Catalogo</a></li>
-					<%
-						String[] categorias = (String[]) session.getAttribute("Categorias");
-						for (int i = 0; i < categorias.length; i++) {
-							out.print("<li class='nav-item '><a class='nav-link ' href='Catalogo?idcategoria=" + (i + 1)
-									+ "' tabindex='-1 ' aria-disabled='true '>" + categorias[i] + "</a></li>");
-						}
-					%>
 
 					<%
 						if ((boolean) session.getAttribute("Iniciado")) {

@@ -24,7 +24,7 @@ public class MProducto {
 	int categoria;
 	String nombreSubcategoria;
 	
-	
+	boolean estadoExiste;
 	PreparedStatement ps;
 	String Sentencia;
 	boolean estado = false;
@@ -110,8 +110,8 @@ public class MProducto {
 			ps = Conexion.prepareStatement("SELECT * FROM luftgun.DatosProductoBusqueda(?)");
 			ps.setString(1, pidreferencia);
 			cargaProductos = ps.executeQuery();
-			cerrarConexion();
 			cargaProductos.next();
+			cerrarConexion();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

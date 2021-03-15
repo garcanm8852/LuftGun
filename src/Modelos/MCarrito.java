@@ -13,6 +13,7 @@ public class MCarrito {
 	boolean estado;
 	int idcliente;
 	String idreferencia;
+	int idcarrito;
 	
 	final String URL = "jdbc:postgresql://ns3034756.ip-91-121-81.eu/a20-mgarde";
 	final String USER = "a20-mgarde";
@@ -82,15 +83,39 @@ public class MCarrito {
 			cargaCarrito.next();
 			cerrarConexion();
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		}
 
+	}
+	
+	public void eliminarProducto(int pIDcarrito) {
+
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("DELETE FROM luftgun.carrito WHERE idcarrito = ?");
+			ps.setInt(1, pIDcarrito);
+			ps.execute();
+			cerrarConexion();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public int getIdcarrito() {
+		idcarrito = 0;
+		try {
+			idcarrito = cargaCarrito.getInt(1);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return idcarrito;
 	}
 	
 	public int getIdcliente() {
 		idcliente = 0;
 		try {
-			idcliente = cargaCarrito.getInt(2);
+			idcliente = cargaCarrito.getInt(3);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -101,11 +126,13 @@ public class MCarrito {
 	public String getIdreferencia() {
 		idreferencia = "";
 		try {
-			idreferencia = cargaCarrito.getString(3);
+			idreferencia = cargaCarrito.getString(2);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return idreferencia;
 	}
+
+
 
 }

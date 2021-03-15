@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	<%@page import="Catalogo.Cproducto"%>
+	
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -18,6 +20,11 @@
 	crossorigin="anonymous"></script>
 <title>Carrito</title>
 </head>
+<%
+	Cproducto[] listaProductosCarrito;
+	int listaidCarrito[];
+%>
+
 
 <body>
 
@@ -35,13 +42,28 @@
 					</li>
 					<li class="nav-item "><a class="nav-link " href="Catalogo "
 						tabindex="-1 " aria-disabled="true ">Catalogo</a></li>
-					<li class="nav-item "><a class="nav-link "
-						href="InicioSesion " tabindex="-1 " aria-disabled="true ">Iniciar
-							Sesi�n</a></li>
-					<li class="nav-item "><a class="nav-link " href="Registro "
-						tabindex="-1 " aria-disabled="true ">Registrarse</a></li>
+					<%
+						if ((boolean) session.getAttribute("Iniciado")) {
 
-				</ul>
+							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido "
+									+ (String) session.getAttribute("NombreUsuario"));
+							out.print(
+									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
+							out.print("</li>");
+
+						} else {
+
+							out.print("<li class='nav-item active'>");
+							out.print(
+									"<a class='nav-link ' href='IniciarSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar	Sesión</a>");
+							out.print("</li>");
+
+							out.print("<li class='nav-item  '>");
+							out.print("<a class='nav-link ' href='Registro ' tabindex='-1 ' aria-disabled='true '>Registrarse</a>");
+							out.print("</li>");
+
+						}
+					%>				</ul>
 			</div>
 		</nav>
 	</header>
@@ -54,9 +76,97 @@
 			</div>
 		</article>
 		<article class="row mt-5">
+			<% 
+			double precioTotal = 0;
+
+			try {
+				if ((boolean) session.getAttribute("Iniciado")) {
+				
+				listaProductosCarrito = (Cproducto[]) session.getAttribute("ProductosCarrito");
+				listaidCarrito = (int[]) session.getAttribute("idCarritos");
+				for (int j = 0; j < listaProductosCarrito.length; j++) {
+
+					out.print("<div class='col-md-12 mt-5'>");
+					out.print("<div class='card w-100'>");
+					out.print("<div class='card-body'>");
+					out.print("<div class='row'>");
+					out.print("<div class='col-md-3'>");
+					out.print("<img class='card-img-top' src = '/LuftGun/DecodificarImagen?idreferencia="
+							+ listaProductosCarrito[j].getIdreferencia() + "'>");
+					out.print("</div>");
+					out.print("<div class='col-md-3'>");
+					out.print("<h5 class='card-title'>" + listaProductosCarrito[j].getNombre() + "</h5>");
+					out.print("</div>");
+					out.print("<div class='col-md-2'>");
+					out.print("<h6 class='card-subtitle mb-2 text-muted'>" + listaProductosCarrito[j].getMarca() + "</h6>");
+					out.print("</div>");
+					out.print("<div class='col-md-2'>");
+					out.print("<p class='card-text text-center bold'>" + listaProductosCarrito[j].getPrecio() + "€</p>");
+					out.print("</div>");
+					out.print("<div class='col-md-2'>");
+					out.print("<a href='EliminarProductoCarrito?idcarrito=" + listaidCarrito[j]
+							+ "' class='btn btn-primary w-100'>Eliminar</a>");
+					out.print("</div>");
+					out.print("</div>");
+					out.print("</div>");
+					out.print("</div>");
+					out.print("</div>");
+					
+					precioTotal = precioTotal + listaProductosCarrito[j].getPrecio();
+				}
+					
+
+
+				}else{
+					listaProductosCarrito = (Cproducto[]) session.getAttribute("ProductosCookie");
+					for (int h = 0; h < listaProductosCarrito.length; h++) {
+
+						out.print("<div class='col-md-12 mt-5'>");
+						out.print("<div class='card w-100'>");
+						out.print("<div class='card-body'>");
+						out.print("<div class='row'>");
+						out.print("<div class='col-md-3'>");
+						out.print("<img class='card-img-top' src = '/LuftGun/DecodificarImagen?idreferencia="
+								+ listaProductosCarrito[h].getIdreferencia() + "'>");
+						out.print("</div>");
+						out.print("<div class='col-md-3'>");
+						out.print("<h5 class='card-title'>" + listaProductosCarrito[h].getNombre() + "</h5>");
+						out.print("</div>");
+						out.print("<div class='col-md-2'>");
+						out.print("<h6 class='card-subtitle mb-2 text-muted'>" + listaProductosCarrito[h].getMarca() + "</h6>");
+						out.print("</div>");
+						out.print("<div class='col-md-2'>");
+						out.print("<p class='card-text text-center bold'>" + listaProductosCarrito[h].getPrecio() + "€</p>");
+						out.print("</div>");
+						out.print("<div class='col-md-2'>");
+						out.print("<a href='EliminarProductoCarrito?idcookie=" + listaProductosCarrito[h].getIdreferencia()
+								+ "' class='btn btn-primary w-100'>Eliminar</a>");
+						out.print("</div>");
+						out.print("</div>");
+						out.print("</div>");
+						out.print("</div>");
+						out.print("</div>");
+						
+						precioTotal = precioTotal + listaProductosCarrito[h].getPrecio();
+					}
+					
+				}
+			} catch (Exception e) {
+				// Throw e;
+
+			}
+		%>
+					</article>
 			
+                    <div class='row mt-5 mb-5 text-center'>
+                        <div class='col-md-6'>
+                            <h4>El precio total de su compra es: <%out.print((int)precioTotal); %>€</h4>
+                        </div>
+                        <div class='col-md-6'>
+                            <a href='' class='btn btn-primary w-100'>Realizar compra</a>
+                        </div>
+                    </div>
 			
-		</article>
 
 	</section>
 

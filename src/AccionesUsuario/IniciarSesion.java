@@ -28,39 +28,6 @@ public class IniciarSesion extends HttpServlet {
 	int ContadorCategorias;
 	
 
-	protected int numeroCategorias() {
-
-		try {
-			numeroCategorias = 1;
-			mCategoria.cargarCategorias();
-			while (mCategoria.consultarSiguiente()) {
-				numeroCategorias++;
-			}
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return numeroCategorias;
-
-	}
-
-	protected String[] almacenarCategorias() {
-		try {
-			categorias = new String[numeroCategorias()];
-			mCategoria.cargarCategorias();
-			ContadorCategorias = 0;
-			do {
-				categorias[ContadorCategorias] = mCategoria.getnombreCategoria();
-				ContadorCategorias++;
-			} while (mCategoria.consultarSiguiente());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return categorias;
-	}
 
 	
 	protected boolean inciarSesion(String pEmail, String pContrasena) {
@@ -88,7 +55,6 @@ public class IniciarSesion extends HttpServlet {
 		if (sesion.getAttribute("Iniciado") == null) {
 			sesion.setAttribute("Iniciado", false);
 		}
-		sesion.setAttribute("Categorias", almacenarCategorias());
 		request.getRequestDispatcher("WEB-INF/iniciarsesion.jsp").forward(request, response);
 	}
 
@@ -107,11 +73,9 @@ public class IniciarSesion extends HttpServlet {
 			sesion.setAttribute("Iniciado", true);
 			sesion.setAttribute("NombreUsuario", mCliente.getNombre());
 			sesion.setAttribute("idcliente", mCliente.getIdcliente());
-			sesion.setAttribute("Categorias", almacenarCategorias());
 			request.getRequestDispatcher("Catalogo").forward(request, response);
 		}else {
 			sesion.setAttribute("Iniciado", false);
-			sesion.setAttribute("Categorias", almacenarCategorias());
 			sesion.setAttribute("Error", true);
 			request.getRequestDispatcher("WEB-INF/iniciarsesion.jsp").forward(request, response);
 		}
