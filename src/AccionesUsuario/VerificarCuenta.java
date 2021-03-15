@@ -26,6 +26,16 @@ public class VerificarCuenta extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		sesion = request.getSession();
+		  try {
+			    OutMail.enviar("luftgunmail@gmail.com",
+			            "Luftgun20$",
+			           (String) sesion.getAttribute("vEmail") ,
+			           (String) sesion.getAttribute("vNombre"),
+			           (int) sesion.getAttribute("Validacion") + "");
+
+			} catch (Exception e) {
+			    e.printStackTrace();
+			}
 		request.getRequestDispatcher("WEB-INF/VerificarCuenta.jsp").forward(request, response);
 	}
 
