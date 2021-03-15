@@ -45,8 +45,10 @@
 				<ul class='navbar-nav mr-auto '>
 					<li class='nav-item '><a class='nav-link ' href='Index '>Inicio</a>
 					</li>
-					<li class='nav-item'><a class='nav-link' href='Catalogo'
+					<li class='nav-item active'><a class='nav-link' href='Catalogo'
 						tabindex='-1 ' aria-disabled='true '>Catalogo</a></li>
+															<li class="nav-item "><a class="nav-link " href="Carrito "
+						tabindex="-1 " aria-disabled="true ">Carrito</a></li>
 					<%
 						String[] categorias = (String[]) session.getAttribute("Categorias");
 						for (int i = 0; i < categorias.length; i++) {
@@ -58,15 +60,18 @@
 					<%
 						if ((boolean) session.getAttribute("Iniciado")) {
 
-							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido "
+							out.print("<span class='nav-link' style='color:#007bff;'> Bienvenido "
 									+ (String) session.getAttribute("NombreUsuario"));
+							out.print("</span>");
+							out.print("<li class='nav-item' style='color:#007bff;'>");
+
 							out.print(
 									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
 							out.print("</li>");
 
 						} else {
 
-							out.print("<li class='nav-item active'>");
+							out.print("<li class='nav-item'>");
 							out.print(
 									"<a class='nav-link ' href='IniciarSesion ' tabindex='-1 ' aria-disabled='true '>Iniciar	Sesión</a>");
 							out.print("</li>");

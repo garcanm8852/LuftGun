@@ -101,6 +101,19 @@ public class MCarrito {
 		}
 	}
 	
+	public void vaciarCarrito(int pIDcliente) {
+
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("DELETE FROM luftgun.carrito WHERE idcliente = ?");
+			ps.setInt(1, pIDcliente);
+			ps.execute();
+			cerrarConexion();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 	public int getIdcarrito() {
 		idcarrito = 0;
 		try {

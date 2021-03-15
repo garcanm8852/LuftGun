@@ -25,6 +25,7 @@
 	src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'
 	integrity='sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns'
 	crossorigin='anonymous'></script>
+	
 <title>Catálogo</title>
 </head>
 
@@ -42,8 +43,10 @@
 				<ul class='navbar-nav mr-auto '>
 					<li class='nav-item '><a class='nav-link ' href='Index '>Inicio</a>
 					</li>
-					<li class='nav-item'><a class='nav-link ' href='Catalogo '
+					<li class='nav-item active'><a class='nav-link ' href='Catalogo '
 						tabindex='-1 ' aria-disabled='true '>Catalogo</a></li>
+															<li class="nav-item "><a class="nav-link " href="Carrito "
+						tabindex="-1 " aria-disabled="true ">Carrito</a></li>
 					<%
 						String[] categorias = (String[]) session.getAttribute("Categorias");
 						for (int i = 0; i < categorias.length; i++) {
@@ -55,8 +58,11 @@
 					<%
 						if ((boolean) session.getAttribute("Iniciado")) {
 
-							out.print("<li class='nav-item active' style='color:#007bff;'> Bienvenido "
+							out.print("<span class='nav-link' style='color:#007bff;'> Bienvenido "
 									+ (String) session.getAttribute("NombreUsuario"));
+							out.print("</span>");
+							out.print("<li class='nav-item' style='color:#007bff;'>");
+
 							out.print(
 									"<a class='nav-link ' href='CerrarSesion' tabindex='-1 ' aria-disabled='true '>Cerrar	Sesión</a>");
 							out.print("</li>");

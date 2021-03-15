@@ -57,7 +57,6 @@ public class MProducto {
 			cargaProductos.next();
 			cerrarConexion();
 		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 	
