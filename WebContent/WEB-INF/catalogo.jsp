@@ -126,6 +126,19 @@
 				</div>
 			</div>
 		</article>
+		
+		<div class="row mt-5 mb-5 justify-content-center">
+		<nav aria-label="Page navigation example">
+  			<ul class="pagination">
+  			
+  				<%
+  				for(int k = 0; k < (int) session.getAttribute("NumeroPaginas"); k++ ){
+  				out.print("<li class='page-item'><a class='page-link' href='Catalogo?Pagina="+ k + "'>"+ (k+1) + "</a></li>");
+  				}
+  				%>
+			 </ul>
+		</nav>
+		</div>
 
 	</section>
 

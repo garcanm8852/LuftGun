@@ -10,7 +10,7 @@ public class MProducto {
 	Connection Conexion;
 	ResultSet cargaProductos;
 	ResultSet srcProducto;
-	
+	ResultSet cargaRegistros;
 	String idreferencia;
 	String nombre;
 	String marca;
@@ -23,7 +23,8 @@ public class MProducto {
 	String nombreCategoria;
 	int categoria;
 	String nombreSubcategoria;
-	
+	int numeroRegistros;
+	int pagina;
 	boolean estadoExiste;
 	PreparedStatement ps;
 	String Sentencia;
@@ -58,6 +59,36 @@ public class MProducto {
 			cerrarConexion();
 		} catch (SQLException e) {
 		}
+	}
+	
+	public void cargarProductosPaginados(int pPagina) {
+		pagina = 5 * pPagina;
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT * FROM luftgun.producto offset ? limit 5");
+			ps.setInt(1, pagina);
+			cargaProductos = ps.executeQuery();
+			cargaProductos.next();
+			cerrarConexion();
+		} catch (SQLException e) {
+		}
+	}
+	
+	public int numeroRegistros() {
+		numeroRegistros = 0;
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("SELECT COUNT(idreferencia) from luftgun.producto");
+			cargaRegistros = ps.executeQuery();
+			cargaRegistros.next();
+			cerrarConexion();
+			
+			numeroRegistros = cargaRegistros.getInt(1);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return numeroRegistros;
 	}
 	
 	public void cargarProductosPorCategorias(int pidCategoria) {

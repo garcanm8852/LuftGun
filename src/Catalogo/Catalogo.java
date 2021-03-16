@@ -28,6 +28,7 @@ public class Catalogo extends HttpServlet {
 	Cproducto[] listaProductos;
 	int ContadorCategorias;
 	int contadorProductos;
+	int numeroPaginas;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -83,6 +84,45 @@ public class Catalogo extends HttpServlet {
 		}
 
 		return listaProductos;
+
+	}
+
+	protected Cproducto[] almacenarProductosPaginados(int pPagina) {
+		System.out.println(pPagina);
+		listaProductos = new Cproducto[5];
+		mProducto.cargarProductosPaginados(pPagina);
+		contadorProductos = 0;
+		try {
+			do {
+				listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
+						mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getStock(),
+						mProducto.getSubcategoria());
+				contadorProductos++;
+			} while (mProducto.consultarSiguiente());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return listaProductos;
+
+	}
+
+	protected int contadorPaginas() {
+		numeroPaginas = 0;
+		try {
+			if (mProducto.numeroRegistros() % 5 == 0) {
+				numeroPaginas = mProducto.numeroRegistros() / 5;
+			} else {
+				numeroPaginas = (mProducto.numeroRegistros() / 5) + 1;
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		return numeroPaginas;
 
 	}
 
@@ -159,15 +199,25 @@ public class Catalogo extends HttpServlet {
 				sesion.setAttribute("Productos",
 						almacenarProductosPorSubcategorias(Integer.parseInt(request.getParameter("idsubcategoria"))));
 			} else {
-				sesion.setAttribute("Productos", almacenarProductos());
+
+				sesion.setAttribute("NumeroPaginas", contadorPaginas());
+
+				if (request.getParameter("Pagina") == null) {
+					sesion.setAttribute("Productos", almacenarProductosPaginados(0));
+
+				} else {
+					sesion.setAttribute("Productos",
+							almacenarProductosPaginados(Integer.parseInt(request.getParameter("Pagina"))));
+				}
 			}
 		}
 
 		request.getRequestDispatcher("WEB-INF/catalogo.jsp").forward(request, response);
 
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

@@ -25,6 +25,17 @@ public class Cproducto {
 		stock = pstock;
 		subcategoria = psubcategoria;
 	}
+	
+	public Cproducto(String pidreferencia, String pnombre, String pmarca, String pdescripcion, Double pprecio,
+		int pstock, int psubcategoria) {
+		idreferencia = pidreferencia;
+		nombre = pnombre;
+		marca = pmarca;
+		descripcion = pdescripcion;
+		precio = pprecio;
+		stock = pstock;
+		subcategoria = psubcategoria;
+	}
 
 	public Cproducto(String pidreferencia, String pnombre, String pmarca, String pdescripcion, Double pprecio,
 			int pstock, int pcategoria, int psubcategoria, String pnombreCategoria, String pnombreSubcategoria) {

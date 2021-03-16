@@ -91,6 +91,10 @@ public class Carrito extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		sesion = request.getSession(true);
+		
+		if (sesion.getAttribute("Iniciado") == null) {
+			sesion.setAttribute("Iniciado", false);
+		}
 
 		if ((boolean) sesion.getAttribute("Iniciado") == true) {
 
