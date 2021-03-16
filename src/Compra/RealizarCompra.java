@@ -81,7 +81,7 @@ public class RealizarCompra extends HttpServlet {
 					request.getParameter("fPais"));
 			AnadirPedPro((mPedido.getIdpedido())+1,(Cproducto[]) sesion.getAttribute("ProductosCarrito"));
 			mCarrito.vaciarCarrito((int)sesion.getAttribute("idcliente"));
-			request.getRequestDispatcher("Catalogo").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/comprarealizada.jsp").forward(request, response);
 
 		} catch (Exception e) {
 

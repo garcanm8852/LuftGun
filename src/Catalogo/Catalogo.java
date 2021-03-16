@@ -88,7 +88,6 @@ public class Catalogo extends HttpServlet {
 	}
 
 	protected Cproducto[] almacenarProductosPaginados(int pPagina) {
-		System.out.println(pPagina);
 		listaProductos = new Cproducto[5];
 		mProducto.cargarProductosPaginados(pPagina);
 		contadorProductos = 0;

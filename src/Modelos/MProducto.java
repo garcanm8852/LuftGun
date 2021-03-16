@@ -80,10 +80,9 @@ public class MProducto {
 			establecerConexion();
 			ps = Conexion.prepareStatement("SELECT COUNT(idreferencia) from luftgun.producto");
 			cargaRegistros = ps.executeQuery();
-			cargaRegistros.next();
-			cerrarConexion();
-			
+			cargaRegistros.next();			
 			numeroRegistros = cargaRegistros.getInt(1);
+			cerrarConexion();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -125,9 +124,9 @@ public class MProducto {
 			ps = Conexion.prepareStatement("SELECT img FROM luftgun.producto WHERE idreferencia = ?");
 			ps.setString(1, pidreferencia);
 			srcProducto = ps.executeQuery();
-			cerrarConexion();
 			srcProducto.next();
 			src = srcProducto.getBytes(1);
+			cerrarConexion();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
