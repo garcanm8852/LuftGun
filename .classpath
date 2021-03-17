@@ -8,9 +8,20 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<!-- Windows -->
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/libs/javax.servlet-api-4.0.0.jar"/>
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/libs/postgresql-42.2.19.jar"/>
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/LuftGun/libs/commons-io-2.8.0.jar"/>
 	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/LuftGun/libs/javax.mail.jar"/>
+	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/LuftGun/libs/javax.mail.jar"/>
+	<classpathentry kind="lib" path="E:/GradoSuperior/Servidor/LuftGun/libs/javax.mail.jar"/>
+	<!-- Linux-->
+	<!--
+	<classpathentry kind="lib" path="/usr/share/java/servlet-api-3.1.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/javax.mail.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/jsp-api-2.3.jar"/>
+	<classpathentry kind="lib" path="/usr/share/java/postgresql.jar"/>
+	-->
+
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
