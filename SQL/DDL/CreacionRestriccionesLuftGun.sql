@@ -123,3 +123,8 @@ ALTER TABLE
     ONLY luftgun.producto
 ADD
     CONSTRAINT "FK_SUBCATEGORIA_TO_PRODUCTO" FOREIGN KEY (idsubcategoria) REFERENCES luftgun.subcategoria(idsubcategoria) NOT VALID;
+
+-- Completed on 2021-03-17 18:48:57
+--
+-- PostgreSQL database dump complete
+--

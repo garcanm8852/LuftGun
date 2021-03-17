@@ -48,7 +48,8 @@ CREATE FUNCTION luftgun.datosclientesesion(
     nombre character varying,
     apellido character varying,
     email character varying,
-    contrasena character varying
+    contrasena character varying,
+    estado character varying
 ) LANGUAGE sql AS $ $
 SELECT
     *
@@ -104,7 +105,6 @@ WHERE
 $ $;
 
 ALTER FUNCTION luftgun.datosproductobusqueda(busquedareferencia character varying) OWNER TO "a20-mgarde";
-
 --
 -- TOC entry 197 (class 1255 OID 75830)
 -- Name: datosproductoscompleto(); Type: FUNCTION; Schema: luftgun; Owner: a20-mgarde
@@ -178,7 +178,6 @@ WHERE
 $ $;
 
 ALTER FUNCTION luftgun.datosproductoscompletobusqueda(busquedacategoria integer) OWNER TO "a20-mgarde";
-
 --
 -- TOC entry 213 (class 1255 OID 75850)
 -- Name: datosproductosubcategoria(integer); Type: FUNCTION; Schema: luftgun; Owner: a20-mgarde
@@ -218,7 +217,6 @@ WHERE
 $ $;
 
 ALTER FUNCTION luftgun.datosproductosubcategoria(busquedasubcategoria integer) OWNER TO "a20-mgarde";
-
 --
 -- TOC entry 196 (class 1255 OID 75827)
 -- Name: nombreProducto(); Type: FUNCTION; Schema: luftgun; Owner: a20-mgarde
@@ -290,7 +288,8 @@ CREATE TABLE luftgun.cliente (
     nombre character varying(40) NOT NULL,
     apellido character varying(40) NOT NULL,
     email character varying(40) NOT NULL,
-    contrasena character varying(24) NOT NULL
+    contrasena character varying(24) NOT NULL,
+    estado character varying(20)
 );
 
 ALTER TABLE

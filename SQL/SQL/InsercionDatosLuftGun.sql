@@ -1,4 +1,5 @@
-- -- TOC entry 2194 (class 0 OID 76100)
+--
+-- TOC entry 2194 (class 0 OID 76100)
 -- Dependencies: 195
 -- Data for Name: carrito; Type: TABLE DATA; Schema: luftgun; Owner: a20-mgarde
 --
@@ -83,88 +84,269 @@ VALUES
 -- Data for Name: cliente; Type: TABLE DATA; Schema: luftgun; Owner: a20-mgarde
 --
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
-    (1, 'Manuel', 'Garcia', 'a20@gmail.com', '12345');
+    (
+        2,
+        'pepe',
+        'garcia',
+        'a21@gmail.com',
+        '1234',
+        NULL
+    );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
-    (2, 'pepe', 'garcia', 'a21@gmail.com', '1234');
+    (
+        3,
+        'pepe',
+        'garcia',
+        'a210@gmail.com',
+        '123',
+        NULL
+    );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
-    (3, 'pepe', 'garcia', 'a210@gmail.com', '123');
+    (
+        4,
+        'pepe',
+        'garcia',
+        'a20333@gmail.com',
+        '123',
+        NULL
+    );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
-    (4, 'pepe', 'garcia', 'a20333@gmail.com', '123');
+    (
+        5,
+        'Juan',
+        'Moreno',
+        'a2120@gmail.com',
+        '1234',
+        NULL
+    );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
-VALUES
-    (5, 'Juan', 'Moreno', 'a2120@gmail.com', '1234');
-
-INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
     (
         6,
         'Jose',
         'Fernandez',
         'JoseFernandez@gmai.com',
-        '1234'
+        '1234',
+        NULL
     );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
     (
         7,
         'Juan',
         'Lagostena',
         'jlagbar@noexistedominio.com',
-        '12345'
+        '12345',
+        NULL
     );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
     (
         8,
         'Miguel Angel',
         'Garcia',
         'holahola@gmail.com',
-        'paco'
+        'paco',
+        NULL
     );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
-    (9, 'manolo', 'ferna', 'a23@gmail.com', '12345');
+    (
+        9,
+        'manolo',
+        'ferna',
+        'a23@gmail.com',
+        '12345',
+        NULL
+    );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
     (
         10,
         'ismael',
         'marroquin',
         'im@gmail.com',
-        '1234'
+        '1234',
+        NULL
     );
 
 INSERT INTO
-    luftgun.cliente (idcliente, nombre, apellido, email, contrasena)
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
 VALUES
     (
         11,
         'Manuel',
         'Quiros',
         'a20garcanm8852@ies-mardecadiz.com',
-        '12345'
+        '12345',
+        NULL
+    );
+
+INSERT INTO
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
+VALUES
+    (
+        12,
+        'Manuel',
+        'Garcia',
+        'manueljesusgarciaquiroscanovas@gmail.com',
+        '1234',
+        NULL
+    );
+
+INSERT INTO
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
+VALUES
+    (
+        1,
+        'Manuel',
+        'Garcia',
+        'a20@gmail.com',
+        '12345',
+        'Operativo'
+    );
+
+INSERT INTO
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
+VALUES
+    (
+        13,
+        'Brian',
+        'Fernandez',
+        'bf@gmai.com',
+        '1234',
+        'Operativo'
+    );
+
+INSERT INTO
+    luftgun.cliente (
+        idcliente,
+        nombre,
+        apellido,
+        email,
+        contrasena,
+        estado
+    )
+VALUES
+    (
+        14,
+        'Daniel',
+        'Enriquez',
+        'de@gmai.com',
+        '12345',
+        'Operativo'
     );
 
 --
@@ -497,6 +679,106 @@ VALUES
         'Bielorrusia'
     );
 
+INSERT INTO
+    luftgun.pedido (
+        idpedido,
+        idcliente,
+        fecha,
+        tel,
+        calle,
+        provincia,
+        localidad,
+        cp,
+        pais
+    )
+VALUES
+    (
+        14,
+        1,
+        '2021-03-17',
+        608444333,
+        'Paseo Nuestra vida de estudiante',
+        'Cadiz',
+        'Rota',
+        11520,
+        'España'
+    );
+
+INSERT INTO
+    luftgun.pedido (
+        idpedido,
+        idcliente,
+        fecha,
+        tel,
+        calle,
+        provincia,
+        localidad,
+        cp,
+        pais
+    )
+VALUES
+    (
+        15,
+        1,
+        '2021-03-17',
+        608444333,
+        'Paseo Nuestra vida de vida',
+        'Malaga',
+        'Fuengirola',
+        12344,
+        'España'
+    );
+
+INSERT INTO
+    luftgun.pedido (
+        idpedido,
+        idcliente,
+        fecha,
+        tel,
+        calle,
+        provincia,
+        localidad,
+        cp,
+        pais
+    )
+VALUES
+    (
+        16,
+        1,
+        '2021-03-17',
+        608444333,
+        'Paseo Nuestra vida de ',
+        'Rota',
+        'Rota',
+        11520,
+        'España'
+    );
+
+INSERT INTO
+    luftgun.pedido (
+        idpedido,
+        idcliente,
+        fecha,
+        tel,
+        calle,
+        provincia,
+        localidad,
+        cp,
+        pais
+    )
+VALUES
+    (
+        17,
+        14,
+        '2021-03-17',
+        608444333,
+        'Calle donde vive daniel',
+        'Cadiz',
+        'El puerto ',
+        11500,
+        'España'
+    );
+
 --
 -- TOC entry 2192 (class 0 OID 75651)
 -- Dependencies: 193
@@ -576,6 +858,41 @@ INSERT INTO
     luftgun.pedpro (idpedido, idreferencia)
 VALUES
     (13, 'HE0005569-1');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (14, 'HE0004952-1');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (15, 'HE0005374-1');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (15, 'HE0000564');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (16, 'HE0006213-1');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (17, 'HE0004952-1');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (17, 'HE0001550-1');
+
+INSERT INTO
+    luftgun.pedpro (idpedido, idreferencia)
+VALUES
+    (17, 'HE0005374-1');
 
 --
 -- TOC entry 2191 (class 0 OID 75638)
@@ -1264,5 +1581,3 @@ VALUES
 -- Dependencies: 194
 -- Name: carrito_idcarrito_seq; Type: SEQUENCE SET; Schema: luftgun; Owner: a20-mgarde
 --
-SELECT
-    pg_catalog.setval('luftgun.carrito_idcarrito_seq', 66, true);
