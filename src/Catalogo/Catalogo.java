@@ -20,95 +20,59 @@ import Modelos.MProducto;
 @WebServlet("/Catalogo")
 public class Catalogo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	int numeroCategorias;
 	HttpSession sesion;
-	MCategoria mCategoria = new MCategoria();
-	MProducto mProducto = new MProducto();
-	String[] categorias;
-	Cproducto[] listaProductos;
-	int ContadorCategorias;
-	int contadorProductos;
-	int numeroPaginas;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected int numeroCategorias() {
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String[] categorias = null;
+		Cproducto[] listaProductos;
+		int ContadorCategorias;
+		int contadorProductos;
+		int numeroPaginas = 0;
+		MCategoria mCategoria = new MCategoria();
+		MProducto mProducto = new MProducto();
+		int numeroCategorias = 1;
+
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		sesion = request.getSession(true);
+
+		/* Obetención del número de categorias y Categorías */
 		try {
-			numeroCategorias = 1;
 			mCategoria.cargarCategorias();
 			while (mCategoria.consultarSiguiente()) {
 				numeroCategorias++;
 			}
 
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return numeroCategorias;
-
-	}
-
-	protected String[] almacenarCategorias() {
-		try {
-			categorias = new String[numeroCategorias()];
+			categorias = new String[numeroCategorias];
 			mCategoria.cargarCategorias();
 			ContadorCategorias = 0;
 			do {
 				categorias[ContadorCategorias] = mCategoria.getnombreCategoria();
 				ContadorCategorias++;
 			} while (mCategoria.consultarSiguiente());
+			sesion.setAttribute("Categorias", categorias);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return categorias;
-	}
-
-	protected Cproducto[] almacenarProductos() {
-		listaProductos = new Cproducto[25];
-		mProducto.cargarProductos();
-		contadorProductos = 0;
-		try {
-			do {
-				listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
-						mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getImg(),
-						mProducto.getStock(), mProducto.getSubcategoria());
-				contadorProductos++;
-			} while (mProducto.consultarSiguiente());
-		} catch (Exception e) {
-			// TODO: handle exception
+		/**
+		 * Control de estado de sesión.
+		 * */
+		if (sesion.getAttribute("Iniciado") == null) {
+			sesion.setAttribute("Iniciado", false);
 		}
 
-		return listaProductos;
-
-	}
-
-	protected Cproducto[] almacenarProductosPaginados(int pPagina) {
-		listaProductos = new Cproducto[5];
-		mProducto.cargarProductosPaginados(pPagina);
-		contadorProductos = 0;
-		try {
-			do {
-				listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
-						mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getStock(),
-						mProducto.getSubcategoria());
-				contadorProductos++;
-			} while (mProducto.consultarSiguiente());
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		return listaProductos;
-
-	}
-
-	protected int contadorPaginas() {
-		numeroPaginas = 0;
+		/**
+		 * Conteo y creación del número de páginas
+		 * */
 		try {
 			if (mProducto.numeroRegistros() % 5 == 0) {
 				numeroPaginas = mProducto.numeroRegistros() / 5;
@@ -121,92 +85,105 @@ public class Catalogo extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		return numeroPaginas;
-
-	}
-
-	protected Cproducto[] almacenarProductosPorCategorias(int idCategoria) {
-		listaProductos = new Cproducto[25];
-		mProducto.cargarProductosPorCategorias(idCategoria);
-
-		contadorProductos = 0;
-		try {
-			do {
-				listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
-						mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getImg(),
-						mProducto.getStock(), mProducto.getSubcategoria());
-				contadorProductos++;
-			} while (mProducto.consultarSiguiente());
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return listaProductos;
-
-	}
-
-	protected Cproducto[] almacenarProductosPorSubcategorias(int idSubcategoria) {
-		listaProductos = new Cproducto[25];
-		mProducto.cargarProductosPorSubcategorias(idSubcategoria);
-
-		contadorProductos = 0;
-		try {
-			do {
-				listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
-						mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getStock(),
-						mProducto.getCategoria(), mProducto.getSubcategoria(), mProducto.getNombreCategoria(),
-						mProducto.getNombreSubcategoria());
-				;
-				contadorProductos++;
-			} while (mProducto.consultarSiguiente());
-
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
-		return listaProductos;
-
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		sesion = request.getSession(true);
-
-		sesion.setAttribute("Categorias", almacenarCategorias());
-		if (sesion.getAttribute("Iniciado") == null) {
-			sesion.setAttribute("Iniciado", false);
-		}
 		/*
 		 * Carga de catálogo por categaría
 		 */
-
 		if (request.getParameter("idcategoria") != null) {
 			/**
 			 * Carga de catálogo con búsqueda por categorias
 			 */
-			sesion.setAttribute("Productos",
-					almacenarProductosPorCategorias(Integer.parseInt(request.getParameter("idcategoria"))));
-		} else {
+			listaProductos = new Cproducto[25];
+			mProducto.cargarProductosPorCategorias(Integer.parseInt(request.getParameter("idcategoria")));
 
+			contadorProductos = 0;
+			try {
+				do {
+					listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(),
+							mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+							mProducto.getPrecio(), mProducto.getStock(), mProducto.getCategoria(),
+							mProducto.getSubcategoria(), mProducto.getNombreCategoria(),
+							mProducto.getNombreSubcategoria());
+					;
+					contadorProductos++;
+				} while (mProducto.consultarSiguiente());
+				sesion.setAttribute("Productos", listaProductos);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+
+		} else {
+			/**
+			 * Carga de catálogo con búsqueda por subcategorias
+			 */
 			if (request.getParameter("idsubcategoria") != null) {
-				/**
-				 * Carga de catálogo con búsqueda por subcategorias
-				 */
-				sesion.setAttribute("Productos",
-						almacenarProductosPorSubcategorias(Integer.parseInt(request.getParameter("idsubcategoria"))));
+				listaProductos = new Cproducto[25];
+				mProducto.cargarProductosPorSubcategorias(Integer.parseInt(request.getParameter("idsubcategoria")));
+
+				contadorProductos = 0;
+				try {
+					do {
+						listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(),
+								mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+								mProducto.getPrecio(), mProducto.getStock(), mProducto.getCategoria(),
+								mProducto.getSubcategoria(), mProducto.getNombreCategoria(),
+								mProducto.getNombreSubcategoria());
+						;
+						contadorProductos++;
+					} while (mProducto.consultarSiguiente());
+
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				sesion.setAttribute("Productos", listaProductos);
+				
 			} else {
 
-				sesion.setAttribute("NumeroPaginas", contadorPaginas());
+				/**
+				 * Carga de catálogo paginada - Página 0.
+				 */
+				sesion.setAttribute("NumeroPaginas", numeroPaginas);
 
 				if (request.getParameter("Pagina") == null) {
-					sesion.setAttribute("Productos", almacenarProductosPaginados(0));
+
+					listaProductos = new Cproducto[5];
+					mProducto.cargarProductosPaginados(0);
+					contadorProductos = 0;
+					try {
+						do {
+							listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(),
+									mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+									mProducto.getPrecio(), mProducto.getStock(), mProducto.getSubcategoria());
+							contadorProductos++;
+						} while (mProducto.consultarSiguiente());
+					} catch (Exception e) {
+
+						e.printStackTrace();
+					}
+
+					sesion.setAttribute("Productos", listaProductos);
 
 				} else {
-					sesion.setAttribute("Productos",
-							almacenarProductosPaginados(Integer.parseInt(request.getParameter("Pagina"))));
+					/**
+					 * Carga de catálogo paginada - Página por parámetros.
+					 */
+					listaProductos = new Cproducto[5];
+					mProducto.cargarProductosPaginados(Integer.parseInt(request.getParameter("Pagina")));
+					contadorProductos = 0;
+					try {
+						do {
+							listaProductos[contadorProductos] = new Cproducto(mProducto.getIdreferencia(),
+									mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+									mProducto.getPrecio(), mProducto.getStock(), mProducto.getSubcategoria());
+							contadorProductos++;
+						} while (mProducto.consultarSiguiente());
+					} catch (Exception e) {
+
+						e.printStackTrace();
+					}
+
+					sesion.setAttribute("Productos", listaProductos);
 				}
 			}
 		}

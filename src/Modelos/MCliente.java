@@ -16,6 +16,7 @@ public class MCliente {
 	String Apellido;
 	String Email;
 	String Contrasena;
+	String EstadoCliente;
 	int ultimoID;
 	boolean estado = false;
 	final String URL = "jdbc:postgresql://ns3034756.ip-91-121-81.eu/a20-mgarde";
@@ -41,7 +42,7 @@ public class MCliente {
 	public void DatosInicioSesion(String pEmail, String pContrasena) {
 		try {
 			establecerConexion();
-			ps = Conexion.prepareStatement("SELECT * FROM luftgun.DatosClienteSesion(?,?);");
+			ps = Conexion.prepareStatement("SELECT * FROM luftgun.datosclientesesion(?,?)");
 			ps.setString(1, pEmail);
 			ps.setString(2, pContrasena);
 			cargaCliente = ps.executeQuery();
@@ -54,7 +55,7 @@ public class MCliente {
 	public boolean ExisteCliente(String pEmail) {
 		try {
 			establecerConexion();
-			ps = Conexion.prepareStatement("SELECT * FROM luftgun.cliente where email = ?;");
+			ps = Conexion.prepareStatement("SELECT * FROM luftgun.cliente where email = ?");
 			ps.setString(1, pEmail);
 			cargaCliente = ps.executeQuery();
 			cargaCliente.next();
@@ -89,17 +90,32 @@ public class MCliente {
 		try {
 			establecerConexion();
 			ps = Conexion.prepareStatement(
-					"INSERT INTO luftgun.cliente(idcliente, nombre, apellido, email, contrasena) VALUES (?, ?, ?, ?, ?); ");
+					"INSERT INTO luftgun.cliente(idcliente, nombre, apellido, email, contrasena, estado) VALUES (?, ?, ?, ?, ?, ?); ");
 			ps.setInt(1, pIdcliente);
 			ps.setString(2, pnombre);
 			ps.setString(3, pApellido);
 			ps.setString(4, pEmail);
 			ps.setString(5, pContrasena);
+			ps.setString(6, "No Operativo");
 			ps.execute();
 			cerrarConexion();
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void CambiarEstado(int pIdcliente, String pEstado) {
+
+		try {
+			establecerConexion();
+			ps = Conexion.prepareStatement("UPDATE luftgun.cliente SET estado=?	WHERE idcliente =?");
+			ps.setString(1, pEstado);
+			ps.setInt(2, pIdcliente);
+			ps.execute();
+			cerrarConexion();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 
@@ -154,6 +170,19 @@ public class MCliente {
 
 		return Contrasena;
 	}
+	
+	public String getEstadoCliente() {
+		EstadoCliente = "";
+		try {
+			EstadoCliente = cargaCliente.getString(6);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return EstadoCliente;
+	}
+
+
 
 
 }

@@ -18,11 +18,10 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 	crossorigin="anonymous"></script>
-<title>Registro</title>
+<title>Primer Inicio</title>
 </head>
 
 <body>
-
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top ">
 			<a class="navbar-brand ">LuftGun</a>
@@ -37,12 +36,7 @@
 					</li>
 					<li class="nav-item "><a class="nav-link " href="Catalogo "
 						tabindex="-1 " aria-disabled="true ">Catalogo</a></li>
-					<li class="nav-item "><a class="nav-link "
-						href="IniciarSesion " tabindex="-1 " aria-disabled="true ">Iniciar
-							Sesión</a></li>
-					<li class="nav-item active "><a class="nav-link "
-						href="Registro " tabindex="-1 " aria-disabled="true ">Registrarse</a>
-					</li>
+
 				</ul>
 			</div>
 		</nav>
@@ -51,37 +45,33 @@
 	<section class="container mt-5 ">
 		<article class="row mt-5 ">
 			<div class="col-md-12 mt-5 ">
-				<h1>Verifique su cuenta de LuftGun</h1>
-				<h2>Por favor, introduzca el código de verificación de Luftgun para activar su cuenta.</h2>
+				<h1>¿Es tu primer inicio?</h1>
+				<h2>Hemos enviado un código a tu correo electrónico para validar tu cuenta.</h2>
 			</div>
 		</article>
 		<article class="row mt-5 ">
 			<div class="col-md-12 ">
-				<form method="POST" action="VerificarCuenta">
+				<form method="post">
 					<div class="form-group ">
-						<label for="fNombre ">Nombre</label> <input id="fNombre "
-							class="form-control " type="text" name="fNombre" value="<% out.print(session.getAttribute("vNombre")); %>" readonly >
+						<label for="fEmail">Correo Eletrónico</label> <input id="fEmail"
+							class="form-control " type="email" name="fEmail" readonly required value="<% out.print(session.getAttribute("email")); %>">
 					</div>
-					<div class="form-group ">
-						<label for="fApellido ">Apellido</label> <input id="fApellido "
-							class="form-control " type="text" name="fApellido" value="<% out.print(session.getAttribute("vApellido")); %>" readonly >
-					</div>
-					<div class="form-group ">
-						<label for="fEmail ">Correo Eletrónico</label> <input id="fEmail "
-							class="form-control " type="email" name="fEmail" value="<% out.print(session.getAttribute("vEmail")); %>"  readonly>
-					</div>
-					<div class="form-group ">
-						<label for="fContrasena ">Contraseña</label> <input
-							id="fContrasena " class="form-control " type="password"
-							name="fContrasena" value="<% out.print(session.getAttribute("vContrasena")); %>" readonly>
+					<div class="form-group">
+						<label for="fContrasena">Contraseña</label> <input
+							id="fContrasena" class="form-control " type="password"
+							name="fContrasena" readonly required value="<% out.print(session.getAttribute("contTemp")); %>">
 					</div>
 					<div class="form-group">
 						<label for="fValidacion ">Validacion</label> <input
-							id="fValidacion " class="form-control " type="text"
-							name="fValidacion">
-					</div>
+							id="fValidacion " class="form-control " type="number" maxlength="6"
+							name="fValidacion" required>
+												<% 
+					if((boolean)session.getAttribute("CodigoInvalido") == true)
+					out.print("<p class='text-error'>El código de verificación no es válido. Pruebe de nuevo</p>"); 
 					
-					<button type="submit" class="btn w-100 btn-primary ">Verificar</button>
+					%>
+					</div>
+					<button type="submit " class="btn w-100 btn-primary ">Validar cuenta</button>
 				</form>
 			</div>
 		</article>

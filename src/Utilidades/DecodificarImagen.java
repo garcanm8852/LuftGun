@@ -21,10 +21,7 @@ import Modelos.MProducto;
 @WebServlet("/DecodificarImagen")
 public class DecodificarImagen extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	final String phototype = "jpg";
-	MProducto mProducto = new MProducto();
-	byte[] buf;
-	String idreferencia;
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -32,6 +29,10 @@ public class DecodificarImagen extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		final String phototype = "jpg";
+		MProducto mProducto = new MProducto();
+		byte[] buf;
+		String idreferencia;
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		try {

@@ -17,16 +17,30 @@ import Modelos.MProducto;
 @WebServlet("/Producto")
 public class Producto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String idreferencia;
 	HttpSession sesion;
-	MProducto mProducto = new MProducto();
-	Cproducto productoSolicitado;
-	int ContadorCategorias;
-	String[] categorias;
-	int numeroCategorias;
-	MCategoria mCategoria = new MCategoria();
 
-	protected int numeroCategorias() {
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		MProducto mProducto = new MProducto();
+		String idreferencia;
+		Cproducto productoSolicitado;
+		int ContadorCategorias;
+		String[] categorias;
+		int numeroCategorias;
+		MCategoria mCategoria = new MCategoria();
+
+		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		sesion = request.getSession(true);
+
+		if (sesion.getAttribute("Iniciado") == null) {
+			sesion.setAttribute("Iniciado", false);
+		}
 
 		try {
 			numeroCategorias = 1;
@@ -35,59 +49,32 @@ public class Producto extends HttpServlet {
 				numeroCategorias++;
 			}
 
+			try {
+				categorias = new String[numeroCategorias];
+				mCategoria.cargarCategorias();
+				ContadorCategorias = 0;
+				do {
+					categorias[ContadorCategorias] = mCategoria.getnombreCategoria();
+					ContadorCategorias++;
+				} while (mCategoria.consultarSiguiente());
+				sesion.setAttribute("Categorias", categorias);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 
-		return numeroCategorias;
-
-	}
-
-	protected String[] almacenarCategorias() {
 		try {
-			categorias = new String[numeroCategorias()];
-			mCategoria.cargarCategorias();
-			ContadorCategorias = 0;
-			do {
-				categorias[ContadorCategorias] = mCategoria.getnombreCategoria();
-				ContadorCategorias++;
-			} while (mCategoria.consultarSiguiente());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return categorias;
-	}
-
-	protected Cproducto almacenarProducto(String pidreferencia) {
-
-		try {
-			mProducto.consultarProducto(pidreferencia);
+			mProducto.consultarProducto(request.getParameter("idreferencia"));
 			productoSolicitado = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(), mProducto.getMarca(),
 					mProducto.getDescripcion(), mProducto.getPrecio(), mProducto.getStock(), mProducto.getCategoria(),
 					mProducto.getSubcategoria(), mProducto.getNombreCategoria(), mProducto.getNombreSubcategoria());
+			sesion.setAttribute("Producto", productoSolicitado);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		return productoSolicitado;
-	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
-		request.setCharacterEncoding("UTF-8");
-		sesion = request.getSession(true);
-		if (sesion.getAttribute("Iniciado") == null) {
-			sesion.setAttribute("Iniciado", false);
-		}
-
-		sesion.setAttribute("Categorias", almacenarCategorias());
-		sesion.setAttribute("Producto", almacenarProducto(request.getParameter("idreferencia")));
 		request.getRequestDispatcher("WEB-INF/producto.jsp").forward(request, response);
 	}
 

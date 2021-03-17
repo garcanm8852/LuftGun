@@ -24,24 +24,8 @@ import Modelos.MPedido;
 public class RealizarCompra extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession sesion;
-	MPedido mPedido = new MPedido();
-	MPedPro mPedPro = new MPedPro();
-	MCarrito mCarrito = new MCarrito();
-	Cproducto[] listaProductos;
 
-	private void AnadirPedPro(int pIdPedido, Cproducto[] pListaProductos) {
-		// TODO Auto-generated method stub
-		listaProductos = pListaProductos;
-		
-		try {
-			for (int i = 0; i < pListaProductos.length; i++) {
-				mPedPro.AnadirRelacion(pIdPedido,listaProductos[i].getIdreferencia());
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
+
 	
 	
 	/**
@@ -66,6 +50,10 @@ public class RealizarCompra extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		MPedido mPedido = new MPedido();
+		MPedPro mPedPro = new MPedPro();
+		MCarrito mCarrito = new MCarrito();
+		Cproducto[] listaProductos;
 		
 		try {
 			sesion = request.getSession();
@@ -79,7 +67,18 @@ public class RealizarCompra extends HttpServlet {
 					request.getParameter("fLocalidad"),
 					Integer.parseInt(request.getParameter("fCp")),
 					request.getParameter("fPais"));
-			AnadirPedPro((mPedido.getIdpedido())+1,(Cproducto[]) sesion.getAttribute("ProductosCarrito"));
+			
+			listaProductos = (Cproducto[]) sesion.getAttribute("ProductosCarrito");
+			
+			try {
+				for (int i = 0; i < listaProductos.length; i++) {
+					mPedPro.AnadirRelacion((mPedido.getIdpedido())+1,listaProductos[i].getIdreferencia());
+				}
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			
 			mCarrito.vaciarCarrito((int)sesion.getAttribute("idcliente"));
 			request.getRequestDispatcher("WEB-INF/comprarealizada.jsp").forward(request, response);
 

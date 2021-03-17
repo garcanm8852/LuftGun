@@ -26,7 +26,7 @@ public class EnvioCorreo {
 		Session session;
 
 		host = "smtp.gmail.com";
-		port = "465";
+		port = "25";
 		properties = System.getProperties();
 
 		try {
@@ -39,6 +39,7 @@ public class EnvioCorreo {
 			properties.put("mail.smtp.ssl.enable", "true");
 			properties.put("mail.smtp.auth", "true");
 			properties.put("mail.smtp.ssl.socketFactory", sf);
+			properties.put("mail.smtp.starttls.enable","true");
 			session = Session.getInstance(properties, new javax.mail.Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(FROM, CLAVE);

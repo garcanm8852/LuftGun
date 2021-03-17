@@ -22,65 +22,6 @@ import Modelos.MProducto;
 public class Carrito extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	HttpSession sesion;
-	MCarrito mCarrito = new MCarrito();
-	Cproducto[] listaProductos;
-	MProducto mProducto = new MProducto();
-	int[] listaidCarrito = new int[25];
-	int contadorCarrito;
-	int contadorCookies;
-	Cookie CookieProducto;
-
-	protected void anadirProductoCarritoBD(String pReferencia, int pIdcliente) {
-		try {
-			mCarrito.AnadirProductoCarrito(pReferencia, pIdcliente);
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	protected Cproducto[] almacenarProductosCarrito() {
-		mCarrito.cargarCarrito((int) sesion.getAttribute("idcliente"));
-		listaProductos = new Cproducto[25];
-		contadorCarrito = 0;
-		try {
-			if (mCarrito.getIdcarrito() != 0) {
-				do {
-					mProducto.consultarProducto(mCarrito.getIdreferencia());
-					listaProductos[contadorCarrito] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
-							mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), null,
-							mProducto.getStock(), mProducto.getSubcategoria());
-					listaidCarrito[contadorCarrito] = mCarrito.getIdcarrito();
-					contadorCarrito++;
-				} while (mCarrito.consultarSiguiente());
-			}
-
-		} catch (Exception e) {
-
-		}
-
-		return listaProductos;
-	}
-
-	private Cproducto[] almacenarProductosCookie(Cookie[] cookies) {
-		listaProductos = new Cproducto[25];
-		contadorCookies = 0;
-		try {
-
-			for (int i = 0; i < cookies.length; i++) {
-				mProducto.consultarProducto(cookies[i].getValue());
-				if (!cookies[i].getName().equals("JSESSIONID")) {
-					listaProductos[contadorCookies] = new Cproducto(mProducto.getIdreferencia(), mProducto.getNombre(),
-							mProducto.getMarca(), mProducto.getDescripcion(), mProducto.getPrecio(), null,
-							mProducto.getStock(), mProducto.getSubcategoria());
-					contadorCookies++;
-				}
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-
-		}
-		return listaProductos;
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest reqst, HttpServletResponse
@@ -88,10 +29,19 @@ public class Carrito extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		MCarrito mCarrito = new MCarrito();
+		Cproducto[] listaProductos;
+		MProducto mProducto = new MProducto();
+		int[] listaidCarrito = new int[25];
+		int contadorCarrito;
+		int contadorCookies;
+		Cookie CookieProducto;
+		Cookie[] cookies;
+
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		sesion = request.getSession(true);
-		
+
 		if (sesion.getAttribute("Iniciado") == null) {
 			sesion.setAttribute("Iniciado", false);
 		}
@@ -99,9 +49,29 @@ public class Carrito extends HttpServlet {
 		if ((boolean) sesion.getAttribute("Iniciado") == true) {
 
 			if (request.getParameter("idproducto") != null) {
-				anadirProductoCarritoBD(request.getParameter("idproducto"), (int) sesion.getAttribute("idcliente"));
+				mCarrito.AnadirProductoCarrito(request.getParameter("idproducto"),
+						(int) sesion.getAttribute("idcliente"));
 			}
-			sesion.setAttribute("ProductosCarrito", almacenarProductosCarrito());
+
+			mCarrito.cargarCarrito((int) sesion.getAttribute("idcliente"));
+			listaProductos = new Cproducto[25];
+			contadorCarrito = 0;
+			try {
+				if (mCarrito.getIdcarrito() != 0) {
+					do {
+						mProducto.consultarProducto(mCarrito.getIdreferencia());
+						listaProductos[contadorCarrito] = new Cproducto(mProducto.getIdreferencia(),
+								mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+								mProducto.getPrecio(), null, mProducto.getStock(), mProducto.getSubcategoria());
+						listaidCarrito[contadorCarrito] = mCarrito.getIdcarrito();
+						contadorCarrito++;
+					} while (mCarrito.consultarSiguiente());
+				}
+
+			} catch (Exception e) {
+
+			}
+			sesion.setAttribute("ProductosCarrito", listaProductos);
 			sesion.setAttribute("idCarritos", listaidCarrito);
 			request.getRequestDispatcher("WEB-INF/carrito.jsp").forward(request, response);
 
@@ -112,13 +82,50 @@ public class Carrito extends HttpServlet {
 			if (request.getParameter("idproducto") != null) {
 				CookieProducto = new Cookie(request.getParameter("idproducto"), request.getParameter("idproducto"));
 				response.addCookie(CookieProducto);
-				sesion.setAttribute("ProductosCookie", almacenarProductosCookie(request.getCookies()));
-				response.sendRedirect("Carrito");
+				listaProductos = new Cproducto[25];
+				contadorCookies = 0;
+				cookies = request.getCookies();
+				try {
 
+					for (int i = 0; i < cookies.length; i++) {
+						mProducto.consultarProducto(cookies[i].getValue());
+						if (!cookies[i].getName().equals("JSESSIONID")) {
+							listaProductos[contadorCookies] = new Cproducto(mProducto.getIdreferencia(),
+									mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+									mProducto.getPrecio(), null, mProducto.getStock(), mProducto.getSubcategoria());
+							contadorCookies++;
+						}
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+
+				}
+
+				sesion.setAttribute("ProductosCookie", listaProductos);
+				response.sendRedirect("Carrito");
 
 			} // Fin de Carga de producto con añadido COOKIE
 			else {
-				sesion.setAttribute("ProductosCookie", almacenarProductosCookie(request.getCookies()));
+				listaProductos = new Cproducto[25];
+				contadorCookies = 0;
+				cookies = request.getCookies();
+				try {
+
+					for (int i = 0; i < cookies.length; i++) {
+						mProducto.consultarProducto(cookies[i].getValue());
+						if (!cookies[i].getName().equals("JSESSIONID")) {
+							listaProductos[contadorCookies] = new Cproducto(mProducto.getIdreferencia(),
+									mProducto.getNombre(), mProducto.getMarca(), mProducto.getDescripcion(),
+									mProducto.getPrecio(), null, mProducto.getStock(), mProducto.getSubcategoria());
+							contadorCookies++;
+						}
+					}
+
+				} catch (Exception e) {
+					// TODO: handle exception
+
+				}
+				sesion.setAttribute("ProductosCookie", listaProductos);
 				request.getRequestDispatcher("WEB-INF/carrito.jsp").forward(request, response);
 
 			} // Fin de carga de producto base COOKIE

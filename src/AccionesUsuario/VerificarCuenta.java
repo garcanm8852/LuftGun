@@ -18,7 +18,6 @@ import Utilidades.EnvioCorreo;
 public class VerificarCuenta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	EnvioCorreo OutMail = new EnvioCorreo();
-	MCliente mCliente = new MCliente();
 	HttpSession sesion;
 
 	/**
@@ -30,8 +29,8 @@ public class VerificarCuenta extends HttpServlet {
 			    OutMail.enviar("luftgunmail@gmail.com",
 			            "Luftgun20$",
 			           (String) sesion.getAttribute("vEmail") ,
-			           (String) sesion.getAttribute("vNombre"),
-			           (int) sesion.getAttribute("Validacion") + "");
+			           (String) sesion.getAttribute("vNombre") + " Código de validación LuftGun",
+			          "Su código de validación de registro de LuftGun es: " + (int) sesion.getAttribute("Validacion"));
 
 			} catch (Exception e) {
 			    e.printStackTrace();
@@ -44,6 +43,7 @@ public class VerificarCuenta extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		sesion = request.getSession();
+		MCliente mCliente = new MCliente();
 		if (request.getParameter("fValidacion").equals( sesion.getAttribute("Validacion").toString())) {
 		    mCliente.insertarCliente((mCliente.nextID() + 1),
 		    	request.getParameter("fNombre"),
